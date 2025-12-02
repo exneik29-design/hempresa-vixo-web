@@ -14,16 +14,32 @@ const ClientDashboard = () => {
         navigate('/login');
     };
 
-    // Datos de ejemplo del proyecto (en producción vendrían del contexto)
-    const projectId = 1;
-    const projectImages = getProjectImages ? getProjectImages(projectId) : [];
+    // Datos del proyecto (Simulando datos reales del backend)
+    const project = {
+        id: 1,
+        code: '#4092',
+        name: 'Planta Industrial Sur',
+        client: 'Industrias XYZ',
+        startDate: '2024-11-01',
+        endDate: '2025-04-30',
+        progress: 35,
+        status: 'EN EJECUCIÓN',
+        tasks: [
+            { id: 1, name: 'Excavación y fundaciones', start: '2024-11-01', end: '2024-12-15', progress: 100, assignedTo: 'Cuadrilla A' },
+            { id: 2, name: 'Estructura metálica', start: '2024-12-10', end: '2025-02-28', progress: 60, assignedTo: 'Cuadrilla B' },
+            { id: 3, name: 'Instalaciones eléctricas', start: '2025-02-01', end: '2025-04-15', progress: 15, assignedTo: 'Electricistas SEC' },
+            { id: 4, name: 'Terminaciones', start: '2025-03-15', end: '2025-04-30', progress: 0, assignedTo: 'Cuadrilla C' }
+        ]
+    };
+
+    const projectImages = getProjectImages ? getProjectImages(project.id) : [];
 
     return (
         <div style={styles.container}>
             {/* Sidebar */}
             <aside style={styles.sidebar}>
                 <div style={styles.brand}>
-                    <i className="fa-solid fa-bolt" style={{ color: '#3b82f6' }}></i> NEXUS
+                    <div style={styles.logo}>D</div> DACARO
                 </div>
                 <nav style={styles.nav}>
                     <button
@@ -55,8 +71,8 @@ const ClientDashboard = () => {
                 <header style={styles.topbar}>
                     <h2>Panel de Cliente</h2>
                     <div style={styles.userInfo}>
-                        <span>{user?.name || 'Industrias S.A.'}</span>
-                        <div style={styles.avatar}>{user?.name?.[0] || 'I'}</div>
+                        <span>{user?.name || 'Cliente Demo'}</span>
+                        <div style={styles.avatar}>{user?.name?.[0] || 'C'}</div>
                     </div>
                 </header>
 
@@ -66,11 +82,11 @@ const ClientDashboard = () => {
                             {/* Project Header */}
                             <div style={styles.projectHeader}>
                                 <div>
-                                    <h4 style={styles.projectCode}>PROYECTO #4092</h4>
-                                    <h1 style={styles.projectTitle}>Ampliación Planta Sur - Nave Z</h1>
+                                    <h4 style={styles.projectCode}>PROYECTO {project.code}</h4>
+                                    <h1 style={styles.projectTitle}>{project.name}</h1>
                                 </div>
                                 <div style={styles.statusBadge}>
-                                    <span style={styles.dot}></span> EN EJECUCIÓN
+                                    <span style={styles.dot}></span> {project.status}
                                 </div>
                             </div>
 
@@ -91,7 +107,7 @@ const ClientDashboard = () => {
                                     </div>
                                     <div>
                                         <div style={styles.kpiLabel}>Avance</div>
-                                        <div style={styles.kpiValue}>65%</div>
+                                        <div style={styles.kpiValue}>{project.progress}%</div>
                                     </div>
                                 </div>
                                 <div style={styles.kpiCard}>
@@ -100,7 +116,7 @@ const ClientDashboard = () => {
                                     </div>
                                     <div>
                                         <div style={styles.kpiLabel}>Entrega Estimada</div>
-                                        <div style={styles.kpiValue}>Mar 2026</div>
+                                        <div style={styles.kpiValue}>Abr 2025</div>
                                     </div>
                                 </div>
                             </div>
@@ -110,17 +126,17 @@ const ClientDashboard = () => {
                                 <h3>Progreso del Proyecto</h3>
                                 <div style={styles.progressContainer}>
                                     <div style={styles.progressBar}>
-                                        <div style={{ ...styles.progressFill, width: '65%' }}></div>
+                                        <div style={{ ...styles.progressFill, width: `${project.progress}%` }}></div>
                                     </div>
-                                    <span style={styles.progressText}>65% Completado</span>
+                                    <span style={styles.progressText}>{project.progress}% Completado</span>
                                 </div>
 
                                 <div style={styles.milestones}>
                                     <div style={styles.milestone}>
                                         <div style={{ ...styles.milestoneIcon, background: '#22c55e' }}>✓</div>
                                         <div>
-                                            <div style={styles.milestoneTitle}>Cimentación</div>
-                                            <div style={styles.milestoneDate}>Completado - Dic 2025</div>
+                                            <div style={styles.milestoneTitle}>Excavación y fundaciones</div>
+                                            <div style={styles.milestoneDate}>Completado - Dic 2024</div>
                                         </div>
                                     </div>
                                     <div style={styles.milestone}>
@@ -128,17 +144,17 @@ const ClientDashboard = () => {
                                             <i className="fa-solid fa-hammer"></i>
                                         </div>
                                         <div>
-                                            <div style={styles.milestoneTitle}>Estructura Metálica</div>
-                                            <div style={styles.milestoneDate}>En Progreso - Feb 2026</div>
+                                            <div style={styles.milestoneTitle}>Estructura metálica</div>
+                                            <div style={styles.milestoneDate}>En Progreso - Feb 2025</div>
                                         </div>
                                     </div>
                                     <div style={styles.milestone}>
                                         <div style={styles.milestoneIcon}>
-                                            <i className="fa-solid fa-clock"></i>
+                                            <i className="fa-solid fa-bolt"></i>
                                         </div>
                                         <div>
                                             <div style={styles.milestoneTitle}>Instalaciones Eléctricas</div>
-                                            <div style={styles.milestoneDate}>Planificado - Mar 2026</div>
+                                            <div style={styles.milestoneDate}>Planificado - Abr 2025</div>
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +177,7 @@ const ClientDashboard = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <p style={{ color: '#64748b' }}>No hay imágenes disponibles aún. Las fotos aparecerán aquí cuando el equipo las suba.</p>
+                                    <p style={{ color: '#94a3b8' }}>No hay imágenes disponibles aún. Las fotos aparecerán aquí cuando el equipo las suba.</p>
                                 )}
                             </div>
                         </div>
@@ -169,10 +185,63 @@ const ClientDashboard = () => {
 
                     {activeTab === 'cronograma' && (
                         <div style={styles.section}>
-                            <h3>Diagrama de Gantt - Cronograma</h3>
-                            <div style={styles.ganttPlaceholder}>
-                                <i className="fa-solid fa-calendar-days" style={{ fontSize: '3rem', color: '#cbd5e1', marginBottom: '1rem' }}></i>
-                                <p>El cronograma interactivo estará disponible próximamente</p>
+                            <h3 style={{ marginBottom: '2rem' }}>Cronograma de Obra (Gantt)</h3>
+
+                            <div style={styles.ganttContainer}>
+                                {/* Header del Gantt */}
+                                <div style={styles.ganttTaskList}>
+                                    <div style={styles.ganttTaskHeader}>Tarea</div>
+                                    {project.tasks.map(task => (
+                                        <div key={task.id} style={styles.ganttTaskRow}>
+                                            <div>
+                                                <div style={styles.taskName}>{task.name}</div>
+                                                <div style={styles.taskAssigned}>
+                                                    <i className="fa-solid fa-user-helmet-safety"></i> {task.assignedTo}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Timeline del Gantt */}
+                                <div style={styles.ganttTimeline}>
+                                    <div style={styles.ganttTimelineHeader}>
+                                        <div style={styles.ganttMonth}>Nov 24</div>
+                                        <div style={styles.ganttMonth}>Dic 24</div>
+                                        <div style={styles.ganttMonth}>Ene 25</div>
+                                        <div style={styles.ganttMonth}>Feb 25</div>
+                                        <div style={styles.ganttMonth}>Mar 25</div>
+                                        <div style={styles.ganttMonth}>Abr 25</div>
+                                    </div>
+                                    {project.tasks.map(task => (
+                                        <div key={task.id} style={styles.ganttTimelineRow}>
+                                            {/* Barra de progreso visual */}
+                                            <div style={{
+                                                ...styles.ganttBar,
+                                                width: '70%', // Simulado para demo
+                                                marginLeft: task.id === 1 ? '0%' : task.id === 2 ? '20%' : task.id === 3 ? '50%' : '70%',
+                                                background: task.progress === 100 ? '#22c55e' : task.progress > 0 ? '#3b82f6' : '#64748b'
+                                            }}>
+                                                <span style={styles.ganttBarLabel}>{task.progress}%</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div style={styles.legend}>
+                                <div style={styles.legendItem}>
+                                    <div style={{ ...styles.legendColor, background: '#22c55e' }}></div>
+                                    <span>Completado</span>
+                                </div>
+                                <div style={styles.legendItem}>
+                                    <div style={{ ...styles.legendColor, background: '#3b82f6' }}></div>
+                                    <span>En Progreso</span>
+                                </div>
+                                <div style={styles.legendItem}>
+                                    <div style={{ ...styles.legendColor, background: '#64748b' }}></div>
+                                    <span>Pendiente</span>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -206,6 +275,17 @@ const styles = {
         alignItems: 'center',
         gap: '10px'
     },
+    logo: {
+        width: '32px',
+        height: '32px',
+        background: '#3b82f6',
+        borderRadius: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '1.2rem',
+        color: 'white'
+    },
     nav: {
         display: 'flex',
         flexDirection: 'column',
@@ -223,7 +303,8 @@ const styles = {
         alignItems: 'center',
         gap: '12px',
         cursor: 'pointer',
-        transition: 'all 0.3s'
+        transition: 'all 0.3s',
+        fontSize: '0.95rem'
     },
     navLinkActive: {
         color: 'white',
@@ -235,7 +316,9 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        fontSize: '0.95rem',
+        fontWeight: '500'
     },
     logoutBtn: {
         marginTop: 'auto',
@@ -439,13 +522,92 @@ const styles = {
     imageInfo: {
         padding: '1rem'
     },
-    ganttPlaceholder: {
+    ganttContainer: {
         display: 'flex',
-        flexDirection: 'column',
+        gap: '1rem',
+        overflowX: 'auto',
+        marginBottom: '2rem'
+    },
+    ganttTaskList: {
+        minWidth: '250px'
+    },
+    ganttTaskHeader: {
+        padding: '1rem',
+        backgroundColor: '#334155',
+        fontWeight: '600',
+        color: 'white',
+        borderRadius: '8px 8px 0 0'
+    },
+    ganttTaskRow: {
+        padding: '1rem',
+        borderBottom: '1px solid #334155',
+        minHeight: '60px',
+        display: 'flex',
+        alignItems: 'center'
+    },
+    taskName: {
+        fontWeight: '600',
+        color: 'white',
+        marginBottom: '4px'
+    },
+    taskAssigned: {
+        fontSize: '0.8rem',
+        color: '#94a3b8'
+    },
+    ganttTimeline: {
+        flex: 1,
+        minWidth: '600px'
+    },
+    ganttTimelineHeader: {
+        display: 'flex',
+        backgroundColor: '#334155',
+        borderRadius: '8px 8px 0 0'
+    },
+    ganttMonth: {
+        flex: 1,
+        padding: '1rem',
+        textAlign: 'center',
+        fontWeight: '600',
+        color: 'white',
+        fontSize: '0.85rem'
+    },
+    ganttTimelineRow: {
+        display: 'flex',
+        alignItems: 'center',
+        borderBottom: '1px solid #334155',
+        minHeight: '60px',
+        padding: '1rem 0.5rem'
+    },
+    ganttBar: {
+        height: '24px',
+        borderRadius: '4px',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '4rem',
-        color: '#64748b'
+        minWidth: '80px'
+    },
+    ganttBarLabel: {
+        color: 'white',
+        fontSize: '0.75rem',
+        fontWeight: '600'
+    },
+    legend: {
+        display: 'flex',
+        gap: '2rem',
+        marginTop: '1rem',
+        justifyContent: 'center'
+    },
+    legendItem: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        color: '#94a3b8',
+        fontSize: '0.9rem'
+    },
+    legendColor: {
+        width: '16px',
+        height: '16px',
+        borderRadius: '4px'
     }
 };
 
