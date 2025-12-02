@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { COMPANY_INFO } from '../config/company';
 
 const Login = () => {
@@ -17,12 +16,10 @@ const Login = () => {
         setError('');
         setIsLoading(true);
 
-        // Simular pequeño delay para efecto de carga
         setTimeout(() => {
             const result = login(email, password);
 
             if (result.success) {
-                // Redirección basada en el rol
                 switch (result.role) {
                     case 'admin':
                         navigate('/admin');
@@ -47,155 +44,125 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex bg-slate-900">
+        <div style={styles.container}>
             {/* Lado Izquierdo - Imagen y Branding */}
-            <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-                <div className="absolute inset-0 bg-blue-900/40 mix-blend-multiply z-10" />
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-transparent to-transparent z-20" />
+            <div style={styles.leftPanel}>
+                <div style={styles.imageOverlay}></div>
                 <img
                     src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
                     alt="Corporate Building"
-                    className="w-full h-full object-cover"
+                    style={styles.backgroundImage}
                 />
 
-                <div className="absolute bottom-0 left-0 p-16 z-30 text-white w-full">
-                    <div className="flex items-center space-x-3 mb-6">
-                        <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30">
-                            <span className="font-bold text-2xl">V</span>
+                <div style={styles.brandingSection}>
+                    <div style={styles.logoSection}>
+                        <div style={styles.logo}>
+                            <span style={styles.logoText}>D</span>
                         </div>
-                        <span className="text-3xl font-bold tracking-tight">{COMPANY_INFO.name}</span>
+                        <span style={styles.companyName}>{COMPANY_INFO.name}</span>
                     </div>
-                    <h2 className="text-4xl font-bold mb-4 leading-tight">
+                    <h2 style={styles.heroTitle}>
                         Gestión Empresarial <br />
-                        <span className="text-blue-400">Inteligente y Segura</span>
+                        <span style={styles.heroSubtitle}>Inteligente y Segura</span>
                     </h2>
-                    <p className="text-slate-300 text-lg max-w-md leading-relaxed">
+                    <p style={styles.heroDescription}>
                         Accede a tu portal exclusivo para gestionar proyectos, finanzas y operaciones en tiempo real.
                     </p>
                 </div>
             </div>
 
             {/* Lado Derecho - Formulario */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
-                {/* Botón volver */}
-                <Link to="/" className="absolute top-8 right-8 text-slate-400 hover:text-white transition-colors flex items-center space-x-2 text-sm font-medium">
+            <div style={styles.rightPanel}>
+                <Link to="/" style={styles.backButton}>
                     <span>Volver al inicio</span>
-                    <ArrowRight size={16} />
+                    <i className="fa-solid fa-arrow-right"></i>
                 </Link>
 
-                <div className="max-w-md w-full space-y-8">
-                    <div className="text-center lg:text-left">
-                        <div className="lg:hidden flex justify-center mb-6">
-                            <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30">
-                                <span className="text-white font-bold text-2xl">V</span>
+                <div style={styles.formContainer}>
+                    <div style={styles.header}>
+                        <div style={{ ...styles.logoMobile, display: window.innerWidth <= 768 ? 'flex' : 'none' }}>
+                            <div style={styles.logo}>
+                                <span style={styles.logoText}>D</span>
                             </div>
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">Bienvenido de nuevo</h2>
-                        <p className="text-slate-400">Ingresa tus credenciales para acceder al sistema.</p>
+                        <h2 style={styles.title}>Bienvenido de nuevo</h2>
+                        <p style={styles.subtitle}>Ingresa tus credenciales para acceder al sistema.</p>
                     </div>
 
-                    {/* Credenciales de Demo (Solo visible en desarrollo/demo) */}
-                    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-xs text-slate-400 space-y-1">
-                        <p className="font-semibold text-slate-300 mb-2 flex items-center">
-                            <CheckCircle2 size={14} className="mr-2 text-green-500" />
+                    {/* Credenciales de Demo */}
+                    <div style={styles.demoBox}>
+                        <p style={styles.demoTitle}>
+                            <i className="fa-solid fa-check-circle" style={{ color: '#10b981', marginRight: '8px' }}></i>
                             Credenciales de Prueba (Demo):
                         </p>
-                        <div className="grid grid-cols-2 gap-2">
-                            <div>
-                                <span className="text-blue-400">Admin:</span> admin@nexus.com
-                            </div>
-                            <div>
-                                <span className="text-slate-500">Pass:</span> admin
-                            </div>
-                            <div>
-                                <span className="text-blue-400">Cliente:</span> cliente@empresa.com
-                            </div>
-                            <div>
-                                <span className="text-slate-500">Pass:</span> cliente
-                            </div>
-                            <div>
-                                <span className="text-blue-400">Trabajador:</span> trabajador@vixo.com
-                            </div>
-                            <div>
-                                <span className="text-slate-500">Pass:</span> trabajador
-                            </div>
+                        <div style={styles.demoGrid}>
+                            <div><span style={styles.demoLabel}>Admin:</span> admin@nexus.com</div>
+                            <div><span style={styles.demoPass}>Pass:</span> admin</div>
+                            <div><span style={styles.demoLabel}>Cliente:</span> cliente@empresa.com</div>
+                            <div><span style={styles.demoPass}>Pass:</span> cliente</div>
+                            <div><span style={styles.demoLabel}>Trabajador:</span> trabajador@dacaro.cl</div>
+                            <div><span style={styles.demoPass}>Pass:</span> trabajador</div>
                         </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6 mt-8">
-                        <div className="space-y-4">
-                            <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <Mail className="h-5 w-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
-                                </div>
+                    <form onSubmit={handleSubmit} style={styles.form}>
+                        <div style={styles.inputGroup}>
+                            <div style={styles.inputWrapper}>
+                                <i className="fa-solid fa-envelope" style={styles.inputIcon}></i>
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="block w-full pl-10 pr-3 py-3 border border-slate-700 rounded-lg leading-5 bg-slate-800/50 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 sm:text-sm"
+                                    style={styles.input}
                                     placeholder="Correo electrónico"
                                 />
                             </div>
 
-                            <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <Lock className="h-5 w-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
-                                </div>
+                            <div style={styles.inputWrapper}>
+                                <i className="fa-solid fa-lock" style={styles.inputIcon}></i>
                                 <input
                                     type="password"
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full pl-10 pr-3 py-3 border border-slate-700 rounded-lg leading-5 bg-slate-800/50 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 sm:text-sm"
+                                    style={styles.input}
                                     placeholder="Contraseña"
                                 />
                             </div>
                         </div>
 
                         {error && (
-                            <div className="flex items-center p-4 text-sm text-red-400 bg-red-900/20 border border-red-900/50 rounded-lg animate-in fade-in slide-in-from-top-2">
-                                <AlertCircle className="h-5 w-5 mr-3 flex-shrink-0" />
+                            <div style={styles.errorBox}>
+                                <i className="fa-solid fa-exclamation-circle" style={{ marginRight: '10px' }}></i>
                                 <span>{error}</span>
                             </div>
                         )}
 
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember-me"
-                                    name="remember-me"
-                                    type="checkbox"
-                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-700 rounded bg-slate-800"
-                                />
-                                <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-400">
-                                    Recordarme
-                                </label>
-                            </div>
-
-                            <div className="text-sm">
-                                <a href="#" className="font-medium text-blue-500 hover:text-blue-400 transition-colors">
-                                    ¿Olvidaste tu contraseña?
-                                </a>
-                            </div>
+                        <div style={styles.options}>
+                            <label style={styles.checkbox}>
+                                <input type="checkbox" style={{ marginRight: '8px' }} />
+                                Recordarme
+                            </label>
+                            <a href="#" style={styles.forgotLink}>¿Olvidaste tu contraseña?</a>
                         </div>
 
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.02] ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                            style={{ ...styles.submitButton, opacity: isLoading ? 0.7 : 1, cursor: isLoading ? 'not-allowed' : 'pointer' }}
                         >
                             {isLoading ? (
-                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                <div style={styles.spinner}></div>
                             ) : (
                                 'Iniciar Sesión'
                             )}
                         </button>
                     </form>
 
-                    <p className="mt-2 text-center text-sm text-slate-500">
+                    <p style={styles.footer}>
                         ¿No tienes acceso?{' '}
-                        <a href={`mailto:${COMPANY_INFO.emails.support}`} className="font-medium text-blue-500 hover:text-blue-400 transition-colors">
+                        <a href={`mailto:${COMPANY_INFO.emails.support}`} style={styles.footerLink}>
                             Contactar a Soporte
                         </a>
                     </p>
@@ -203,6 +170,249 @@ const Login = () => {
             </div>
         </div>
     );
+};
+
+const styles = {
+    container: {
+        minHeight: '100vh',
+        display: 'flex',
+        background: '#0f172a',
+        fontFamily: 'Inter, sans-serif'
+    },
+    leftPanel: {
+        position: 'relative',
+        width: '50%',
+        overflow: 'hidden',
+        display: window.innerWidth <= 1024 ? 'none' : 'block'
+    },
+    imageOverlay: {
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.8))',
+        zIndex: 1
+    },
+    backgroundImage: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover'
+    },
+    brandingSection: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        padding: '4rem',
+        zIndex: 2,
+        color: 'white'
+    },
+    logoSection: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        marginBottom: '2rem'
+    },
+    logo: {
+        width: '48px',
+        height: '48px',
+        background: '#2563eb',
+        borderRadius: '12px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 10px 30px rgba(37, 99, 235, 0.3)'
+    },
+    logoText: {
+        fontWeight: 'bold',
+        fontSize: '1.5rem',
+        color: 'white'
+    },
+    companyName: {
+        fontSize: '1.875rem',
+        fontWeight: 'bold',
+        fontFamily: 'Oswald, sans-serif'
+    },
+    heroTitle: {
+        fontSize: '2.5rem',
+        fontWeight: 'bold',
+        marginBottom: '1rem',
+        lineHeight: '1.2'
+    },
+    heroSubtitle: {
+        color: '#60a5fa'
+    },
+    heroDescription: {
+        color: '#cbd5e1',
+        fontSize: '1.125rem',
+        maxWidth: '28rem',
+        lineHeight: '1.75'
+    },
+    rightPanel: {
+        width: window.innerWidth <= 1024 ? '100%' : '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem',
+        position: 'relative'
+    },
+    backButton: {
+        position: 'absolute',
+        top: '2rem',
+        right: '2rem',
+        color: '#94a3b8',
+        textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        fontSize: '0.875rem',
+        fontWeight: '500',
+        transition: 'color 0.3s'
+    },
+    formContainer: {
+        maxWidth: '28rem',
+        width: '100%'
+    },
+    header: {
+        textAlign: 'center',
+        marginBottom: '2rem'
+    },
+    logoMobile: {
+        justifyContent: 'center',
+        marginBottom: '1.5rem'
+    },
+    title: {
+        fontSize: '1.875rem',
+        fontWeight: 'bold',
+        color: 'white',
+        marginBottom: '0.5rem'
+    },
+    subtitle: {
+        color: '#94a3b8'
+    },
+    demoBox: {
+        background: 'rgba(30, 41, 59, 0.5)',
+        border: '1px solid #334155',
+        borderRadius: '8px',
+        padding: '1rem',
+        fontSize: '0.75rem',
+        color: '#94a3b8',
+        marginBottom: '2rem'
+    },
+    demoTitle: {
+        fontWeight: '600',
+        color: '#cbd5e1',
+        marginBottom: '0.75rem',
+        display: 'flex',
+        alignItems: 'center'
+    },
+    demoGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '0.5rem'
+    },
+    demoLabel: {
+        color: '#60a5fa'
+    },
+    demoPass: {
+        color: '#64748b'
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.5rem'
+    },
+    inputGroup: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+    },
+    inputWrapper: {
+        position: 'relative'
+    },
+    inputIcon: {
+        position: 'absolute',
+        left: '12px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        color: '#64748b',
+        fontSize: '1.125rem'
+    },
+    input: {
+        width: '100%',
+        paddingLeft: '3rem',
+        paddingRight: '1rem',
+        paddingTop: '0.75rem',
+        paddingBottom: '0.75rem',
+        border: '1px solid #334155',
+        borderRadius: '8px',
+        background: 'rgba(30, 41, 59, 0.5)',
+        color: '#f1f5f9',
+        fontSize: '0.875rem',
+        outline: 'none',
+        transition: 'all 0.2s',
+        fontFamily: 'inherit'
+    },
+    errorBox: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '1rem',
+        fontSize: '0.875rem',
+        color: '#fca5a5',
+        background: 'rgba(127, 29, 29, 0.2)',
+        border: '1px solid rgba(127, 29, 29, 0.5)',
+        borderRadius: '8px'
+    },
+    options: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    checkbox: {
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: '0.875rem',
+        color: '#94a3b8'
+    },
+    forgotLink: {
+        fontSize: '0.875rem',
+        fontWeight: '500',
+        color: '#3b82f6',
+        textDecoration: 'none',
+        transition: 'color 0.3s'
+    },
+    submitButton: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '0.75rem 1rem',
+        border: 'none',
+        borderRadius: '8px',
+        boxShadow: '0 10px 15px rgba(37, 99, 235, 0.2)',
+        fontSize: '0.875rem',
+        fontWeight: '600',
+        color: 'white',
+        background: '#2563eb',
+        transition: 'all 0.2s',
+        fontFamily: 'inherit'
+    },
+    spinner: {
+        width: '20px',
+        height: '20px',
+        border: '2px solid rgba(255,255,255,0.3)',
+        borderTopColor: 'white',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite'
+    },
+    footer: {
+        marginTop: '0.5rem',
+        textAlign: 'center',
+        fontSize: '0.875rem',
+        color: '#64748b'
+    },
+    footerLink: {
+        fontWeight: '500',
+        color: '#3b82f6',
+        textDecoration: 'none',
+        transition: 'color 0.3s'
+    }
 };
 
 export default Login;
