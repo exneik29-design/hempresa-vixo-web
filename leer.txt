@@ -1,0 +1,144 @@
+# Documento de Arquitectura y Diseño Estratégico Web
+**Proyecto:** Plataforma Corporativa de Construcción & Servicios Eléctricos (Nombre por definir)  
+**Versión:** 1.0  
+**Estado:** Planificación / Definición de Requerimientos
+
+---
+
+## 1. Intención y Concepto Estratégico
+
+### 1.1. Visión del Proyecto
+Crear una plataforma web híbrida que funcione como:
+1.  **Herramienta de Marketing (B2B):** Para posicionar a la nueva empresa fusionada en el mercado corporativo e industrial, destacando la sinergia entre Ingeniería Civil y Eléctrica.
+2.  **Herramienta de Gestión (Intranet):** Para mejorar la transparencia y comunicación con el cliente mediante seguimiento de obras en tiempo real.
+3.  **Herramienta de Captación de Talento:** Automatizar la recepción y clasificación de currículums.
+
+### 1.2. Valores a Transmitir (Look & Feel)
+*   **Solidez:** Estructura visual firme, tipografías pesadas.
+*   **Tecnología:** Diseño limpio, interactivo, rápido.
+*   **Sinergia:** Uso de dualidad de colores (Ej. Tonalidades Hormigón para construcción + Acentos Vibrantes para electricidad).
+
+---
+
+## 2. Arquitectura de la Información (Sitemap)
+
+### A. Zona Pública (Frontend)
+Accesible a todo el mundo. SEO friendly.
+
+1.  **Home (Inicio):**
+    *   Hero Section (Video/Imagen alto impacto: Industria/Oficinas).
+    *   Propuesta de valor (Fusión Civil + Eléctrica).
+    *   Resumen de Servicios.
+    *   Call to Action (Cotizar / Ver Proyectos).
+2.  **La Empresa (Nosotros):**
+    *   Historia de la fusión.
+    *   Equipo directivo (Socios).
+    *   Certificaciones y Seguridad.
+3.  **Servicios:**
+    *   División Obra Civil.
+    *   División Infraestructura Eléctrica.
+    *   Servicios Integrales (Llave en mano).
+4.  **Proyectos (Portafolio):**
+    *   Galería filtrable (Industrial, Vivienda, Eléctrico).
+    *   Fichas técnicas de obras realizadas.
+5.  **Actualidad (Blog/Noticias):**
+    *   Artículos técnicos, avances de la industria, noticias de la empresa.
+6.  **Trabaja con Nosotros (Talento):**
+    *   Formulario inteligente de postulaciones.
+7.  **Contacto:**
+    *   Formulario comercial avanzado (Solicitud de presupuestos).
+    *   Ubicación y Datos.
+8.  **Acceso Clientes (Login):**
+    *   Botón discreto pero visible en el menú superior.
+
+### B. Zona Privada (Portal de Cliente)
+Accesible solo con Usuario y Contraseña asignados por la empresa.
+
+1.  **Dashboard Resumen:** Estado general de sus obras activas.
+2.  **Detalle de Proyecto:**
+    *   Cronograma Visual (Gantt simplificado).
+    *   Galería de Avances (Fotos/Videos).
+    *   Gestor de Documentos (Contratos, Planos, Facturas).
+    *   Bitácora de Comunicación (Notas/Chat por tarea).
+
+### C. Zona Administrativa (Backend / CRM)
+Panel de control para los socios y administradores.
+
+1.  **Gestor de Contenidos (CMS):** Crear noticias y subir proyectos al portafolio público.
+2.  **Gestor de Proyectos (PM):** Crear clientes, asignar obras, editar Gantt, subir fotos de avance.
+3.  **Gestor de RRHH (Base de Datos):** Ver lista de postulantes, filtrar por oficio, descargar CVs.
+4.  **Buzón de Presupuestos:** Recepción centralizada de leads comerciales.
+
+---
+
+## 3. Lógica Funcional y Flujos de Usuario
+
+### 3.1. Sistema de Publicaciones (Blog/Noticias)
+*   **Objetivo:** Mantener la web "viva" y mejorar el posicionamiento en Google.
+*   **Lógica:**
+    1.  El Administrador entra al Backend -> Sección "Noticias".
+    2.  Redacta título, cuerpo, sube foto destacada y selecciona categoría (Ej: "Nuevas Adjudicaciones").
+    3.  Al guardar, se publica automáticamente en la sección `/actualidad` de la web pública.
+
+### 3.2. Sistema de Reclutamiento (RRHH)
+*   **Objetivo:** Crear un banco de trabajadores clasificados.
+*   **Lógica Frontend:**
+    *   Formulario con campos: Nombre, Teléfono, Especialidad (Select: Albañil, Electricista SEC, Jefe de Obra, etc.), Años experiencia, Subir CV (PDF/Word).
+*   **Lógica Backend:**
+    *   Los datos se guardan en una Tabla de Postulantes.
+    *   El administrador puede filtrar: "Muéstrame todos los *Electricistas* con *+5 años de experiencia*".
+
+### 3.3. Portal de Clientes (Interacción y Gantt)
+*   **Objetivo:** Fidelización y transparencia.
+*   **Lógica del Gantt:**
+    *   **Admin:** Define las fases (Ej: Cimientos, Estructura, Cableado, Acabados) y fechas estimadas.
+    *   **Estado:** Cada fase tiene estados: *Pendiente, En Proceso, Retrasado, Finalizado*.
+    *   **Cliente:** Ve una barra de progreso visual. Si hace clic en una fase, ve el detalle.
+*   **Lógica de Feedback (Notas):**
+    *   El Cliente ve una tarea ("Instalación Luminarias").
+    *   Clic en "Añadir Nota" -> Escribe: "¿Podemos cambiar a luz cálida?".
+    *   El Admin recibe notificación -> Responde en la plataforma.
+
+---
+
+## 4. Requerimientos Técnicos (Stack Sugerido)
+
+Para lograr la funcionalidad de gestión + la facilidad de publicación, se sugiere una arquitectura escalable:
+
+*   **Base de Datos:** Relacional (MySQL o PostgreSQL) para manejar las relaciones Cliente <-> Proyecto <-> Tareas.
+*   **Backend:** 
+    *   *Opción A (WordPress Avanzado):* Usar WordPress como núcleo + Plugins a medida (Advanced Custom Fields) para los proyectos y un plugin de gestión de usuarios para el portal.
+    *   *Opción B (Laravel/Node.js):* Desarrollo a medida para total control del CRM y Gantt.
+*   **Frontend:** HTML5, CSS3 (SASS), JavaScript (React o Vue.js para el dinamismo del diagrama de Gantt).
+*   **Seguridad:** Certificado SSL (Candado), Encriptación de contraseñas, Protección de archivos adjuntos (Planos y CVs).
+
+---
+
+## 5. Diseño de Interfaz (Wireframe Logic)
+
+### Menú de Navegación (Header)
+`[LOGO]` `[Nosotros]` `[Servicios]` `[Proyectos]` `[Blog]` `[Empleo]` `[ACCESO CLIENTES 🔒]` `[COTIZAR (Botón)]`
+
+### Estructura de Datos en el Backend (Ejemplo Simplificado)
+
+**Tabla: Postulantes**
+| ID | Nombre | Rol | CV_Link | Fecha | Estado |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 01 | Juan Pérez | Electricista | /cv/jp.pdf | 22/11/25 | Entrevistar |
+| 02 | Ana Garcés | Arquitecta | /cv/ag.pdf | 23/11/25 | Rechazado |
+
+**Tabla: Proyectos**
+| ID | Cliente | Nombre Obra | Progreso Total | Link Gantt |
+| :--- | :--- | :--- | :--- | :--- |
+| 105 | Ind. S.A. | Nave Industrial Z | 65% | [Ver JSON] |
+
+---
+
+## 6. Próximos Pasos para el Desarrollo
+
+1.  **Naming y Branding:** Definir Nombre y Logo (Prioridad 1).
+2.  **Mockup Visual:** Diseñar las pantallas principales en Figma o Adobe XD basándose en esta arquitectura.
+3.  **Desarrollo del MVP (Producto Mínimo Viable):**
+    *   Fase 1: Web Pública + Formulario de Empleo + Formulario Contacto.
+    *   Fase 2: Panel de Administración + Blog.
+    *   Fase 3: Portal de Clientes con Gantt Interactivo.

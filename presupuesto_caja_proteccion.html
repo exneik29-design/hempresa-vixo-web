@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto por Trabajos Adicionales - DACARO SpA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 0.5in;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 26px;
+        }
+        .header .logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .info-item {
+            font-size: 14px;
+        }
+        .info-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .total-row td {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .signature {
+            margin-top: 40px;
+        }
+         p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        ul {
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .editable {
+            border-bottom: 1px dashed #999;
+            padding: 2px;
+            min-width: 20px;
+            display: inline-block;
+        }
+        .image-upload-section {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin: 10px 0;
+            display: none;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-print {
+            background-color: #28a745;
+        }
+        .btn-print:hover {
+            background-color: #218838;
+        }
+        
+        /* --- ESTILOS DEL EJEMPLO HTML --- */
+        .blueprint-wrapper {
+            border: 2px solid #0056b3; background-color: #fff;
+            padding: 10px; margin: 10px 0; position: relative;
+        }
+        .blueprint-tag {
+            position: absolute; top: 0; left: 0; background: #0056b3;
+            color: white; padding: 2px 8px; font-size: 8px; font-weight: bold;
+        }
+        .bp-text { font-family: monospace; font-size: 9px; fill: #0056b3; }
+        .force-arrow { stroke: #d9534f; stroke-width: 2; marker-end: url(#arrowRed); }
+        
+        /* Estilo específico para la tabla de costos */
+        .table-container table {
+            display: table !important;
+            table-layout: fixed !important;
+        }
+        .table-container table tbody tr {
+            display: table-row !important;
+        }
+        .table-container table td, .table-container table th {
+            display: table-cell !important;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0.5in;
+                width: 100%;
+                height: auto;
+            }
+            .btn, .image-upload-section {
+                display: none;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button class="btn" onclick="window.print()">Imprimir Presupuesto</button>
+    <button class="btn btn-print" onclick="saveAsPDF()">Guardar como PDF</button>
+
+    <div class="header">
+        <div class="logo">DACARO SpA</div>
+        <h1>PRESUPUESTO POR TRABAJOS ADICIONALES<br>CAJA PROTECTORA PARA CONDUIT ELÉCTRICO</h1>
+    </div>
+
+    <div class="section info-grid">
+        <div class="info-item">
+            <div class="section-title" style="background-color: #0056b3;">Datos de la Empresa Emisora</div>
+            <strong>EMPRESA:</strong> DACARO SpA<br>
+            <strong>REPRESENTANTE LEGAL:</strong> DAVID SALOMÓN CABRERA ROCCO<br>
+            <strong>RUT:</strong> 78.160.531-K<br>
+            <strong>DOMICILIO:</strong> Parcela 51 lote 36 el convento Santo Domingo, VALPARAISO, Chile<br>
+            <strong>CONTACTO:</strong> +56 9 6431 6714 | dacaro_ceo@outlook.com
+        </div>
+        <div class="info-item">
+            <div class="section-title" style="background-color: #0056b3;">Datos de la Propuesta</div>
+            <strong>FECHA PROPUESTA:</strong> <span class="editable" contenteditable="true">23 de Noviembre, 2025</span><br>
+            <strong>PROPUESTA N°:</strong> <span class="editable" contenteditable="true">DAC-2025-CAJA-PROTECCION-CONDUIT</span><br>
+            <strong>DIRIGIDO A:</strong> <span class="editable" contenteditable="true">[Poner Nombre del Cliente]</span><br>
+            <strong>PROYECTO:</strong> <span class="editable" contenteditable="true">Construcción de Caja Protectora para Conductos Eléctricos</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">1. DESCRIPCIÓN DEL PROYECTO</div>
+        <p class="editable" contenteditable="true">Instalación de caja protectora para conductos eléctricos ubicados bajo tablero eléctrico. La caja será construida con perfiles Metalcom y láminas metálicas (aluminio o acero galvanizado delgado) para permitir moldeado. Se realizará excavación para alojar la caja y se aplicará pintura resistente al clima y humedad para protección prolongada.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. ESPECIFICACIONES TÉCNICAS</div>
+        <ul>
+            <li><strong>Estructura:</strong> <span class="editable" contenteditable="true">Perfiles Metalcom para estructura principal</span></li>
+            <li><strong>Recubrimiento:</strong> <span class="editable" contenteditable="true">Lámina de aluminio o acero galvanizado delgado para moldeabilidad</span></li>
+            <li><strong>Excavación:</strong> <span class="editable" contenteditable="true">Realización de excavación para alojar completamente la caja protectora</span></li>
+            <li><strong>Pintura:</strong> <span class="editable" contenteditable="true">Pintura especial resistente a clima y humedad</span></li>
+            <li><strong>Dimensiones:</strong> <span class="editable" contenteditable="true">Según requisitos del cliente y espacio disponible</span></li>
+            <li><strong>Protección:</strong> <span class="editable" contenteditable="true">Protección completa de conductos eléctricos contra factores ambientales</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">3. PROCEDIMIENTO DE TRABAJO</div>
+        <ul>
+            <li><strong>1. Preparación:</strong> <span class="editable" contenteditable="true">Revisión del sitio, medición y planificación</span></li>
+            <li><strong>2. Excavación:</strong> <span class="editable" contenteditable="true">Realización de excavación para alojar caja protectora</span></li>
+            <li><strong>3. Fabricación:</strong> <span class="editable" contenteditable="true">Construcción de estructura con perfiles Metalcom y lámina metálica</span></li>
+            <li><strong>4. Instalación:</strong> <span class="editable" contenteditable="true">Colocación de caja en excavación y conexión con conductos</span></li>
+            <li><strong>5. Acabado:</strong> <span class="editable" contenteditable="true">Aplicación de pintura protectora resistente al clima</span></li>
+            <li><strong>6. Limpieza:</strong> <span class="editable" contenteditable="true">Revisión final y limpieza del área de trabajo</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">4. CARACTERÍSTICAS DE PROTECCIÓN</div>
+        <p class="editable" contenteditable="true">La caja protectora está diseñada para resistir condiciones climáticas adversas y humedad constante. La combinación de perfiles Metalcom y láminas metálicas delgadas permite una estructura robusta pero moldeable. La pintura especial aplicada garantiza protección prolongada contra oxidación y deterioro ambiental.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">5. DETALLE DE COSTOS (SIN IVA)</div>
+        <div class="table-container">
+            <table style="table-layout: fixed; width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 15%; background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">ÍTEM</th>
+                        <th style="width: 65%; background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd;">DETALLE</th>
+                        <th style="width: 20%; background-color: #f2f2f2; padding: 10px; border: 1px solid #ddd; text-align: right;">SUBTOTAL ($)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" style="background-color:#eef6fc; font-weight:bold; color:#0056b3; text-align: center; padding: 10px; border: 1px solid #ddd;">
+                            <strong>A. MATERIALES Y COMPONENTES</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Perfiles Metalcom</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Perfiles estructurales para construcción de la caja protectora</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">50.000</td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Lámina Metálica</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Lámina de aluminio o acero galvanizado delgado para recubrimiento</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">40.000</td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Pintura Especial</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Pintura resistente a clima y humedad para protección exterior</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">20.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background-color:#eef6fc; font-weight:bold; color:#0056b3; text-align: center; padding: 10px; border: 1px solid #ddd;">
+                            <strong>B. MANO DE OBRA Y SERVICIOS</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Excavación</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Excavación para alojar la caja protectora bajo tablero eléctrico</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">30.000</td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Fabricación Caja</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Construcción de caja protectora con materiales indicados</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">50.000</td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Instalación</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Colocación de la caja e integración con conductos existentes</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">40.000</td>
+                    </tr>
+                    <tr>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;"><strong>Acabados y Pintura</strong></td>
+                        <td class="editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">Aplicación de pintura protectora y acabados finales</td>
+                        <td class="text-right editable" contenteditable="true" style="padding: 10px; border: 1px solid #ddd;">20.000</td>
+                    </tr>
+                    <tr class="total-row" style="background-color: #f8f9fa; font-weight: bold;">
+                        <td colspan="2" style="text-align: right; padding: 12px; border: 1px solid #ddd;"><strong>SUBTOTAL NETO MATERIALES Y SERVICIOS</strong></td>
+                        <td class="text-right editable" contenteditable="true" style="font-weight: bold; padding: 12px; border: 1px solid #ddd;">$250.000</td>
+                    </tr>
+                    <tr class="total-row" style="background-color: #007bff; color: white; font-size: 16px; font-weight: bold;">
+                        <td colspan="2" style="text-align: right; padding: 15px; border: 1px solid #ddd;"><strong>TOTAL NETO (SIN IVA)</strong></td>
+                        <td class="text-right editable" contenteditable="true" style="color: white; font-size: 16px; font-weight: bold; padding: 15px; border: 1px solid #ddd;">$250.000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="editable" style="font-size: 12px; text-align: right; margin-top: 10px;" contenteditable="true">*Nota: Este valor no incluye el Impuesto al Valor Agregado (IVA).</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">6. CONDICIONES COMERCIALES</div>
+        <ul>
+            <li><strong>Validez Oferta:</strong> <span class="editable" contenteditable="true">15 días corridos a partir de la fecha de emisión.</span></li>
+            <li><strong>Forma de Pago:</strong> <span class="editable" contenteditable="true">100% Anticipo para compra de materiales.</span></li>
+            <li><strong>Tiempo de Ejecución:</strong> <span class="editable" contenteditable="true">5 a 7 días hábiles después del anticipo.</span></li>
+            <li><strong>Garantía:</strong> <span class="editable" contenteditable="true">1 año sobre la estructura y protección contra defectos de materiales y mano de obra.</span></li>
+        </ul>
+    </div>
+
+    <div class="section signature">
+        <p class="editable" contenteditable="true">Agradecemos su comprensión y confianza. Quedamos a su entera disposición para cualquier consulta técnica o aclaración sobre este presupuesto.</p>
+        <br><br><br>
+        <p>___________________________________<br>
+        <strong class="editable" contenteditable="true">DAVID SALOMÓN CABRERA ROCCO</strong><br>
+        <span class="editable" contenteditable="true">Representante Legal</span><br>
+        <span class="editable" contenteditable="true">DACARO SpA</span></p>
+    </div>
+
+</div>
+
+<script>
+function previewImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+function saveAsPDF() {
+    window.print();
+}
+
+// Function to add additional images
+document.getElementById('imageUpload').addEventListener('change', function(e) {
+    const container = document.getElementById('imageContainer');
+    for (let i = 0; i < e.target.files.length; i++) {
+        const file = e.target.files[i];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '200px';
+                img.style.margin = '10px';
+                img.style.border = '1px solid #ddd';
+                img.style.borderRadius = '4px';
+                container.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+});
+</script>
+
+</body>
+</html>
