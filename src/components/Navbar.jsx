@@ -16,8 +16,28 @@ const Navbar = () => {
         setMobileMenuOpen(false);
     };
 
-    const isActive = (path) => {
-        return location.pathname === path ? 'text-blue-500 font-semibold' : 'text-slate-300 hover:text-white';
+    const handleNavClick = (path, isScroll = false) => {
+        closeMobileMenu();
+
+        if (isScroll) {
+            // Si es un enlace de scroll (como #about)
+            if (location.pathname !== '/') {
+                // Si no estamos en home, ir a home primero
+                navigate('/');
+                // Esperar un poco a que cargue home y luego scrollear
+                setTimeout(() => {
+                    const element = document.getElementById(path.replace('#', ''));
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else {
+                // Si ya estamos en home, solo scrollear
+                const element = document.getElementById(path.replace('#', ''));
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            // Navegación normal
+            navigate(path);
+        }
     };
 
     return (
@@ -36,22 +56,21 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        <Link to="/" className={`${isActive('/')} transition-colors text-sm uppercase tracking-wider`}>
+                        <button onClick={() => handleNavClick('/')} className={`${isActive('/')} transition-colors text-sm uppercase tracking-wider bg-transparent border-none cursor-pointer`}>
                             Inicio
-                        </Link>
-                        {/* Enlace a sección Nosotros en Home */}
-                        <a href="#about" className="text-slate-300 hover:text-white transition-colors text-sm uppercase tracking-wider cursor-pointer">
+                        </button>
+                        <button onClick={() => handleNavClick('#about', true)} className="text-slate-300 hover:text-white transition-colors text-sm uppercase tracking-wider bg-transparent border-none cursor-pointer">
                             Nosotros
-                        </a>
-                        <Link to="/servicios" className={`${isActive('/servicios')} transition-colors text-sm uppercase tracking-wider`}>
+                        </button>
+                        <button onClick={() => handleNavClick('/servicios')} className={`${isActive('/servicios')} transition-colors text-sm uppercase tracking-wider bg-transparent border-none cursor-pointer`}>
                             Servicios
-                        </Link>
-                        <Link to="/portafolio" className={`${isActive('/portafolio')} transition-colors text-sm uppercase tracking-wider`}>
+                        </button>
+                        <button onClick={() => handleNavClick('/portafolio')} className={`${isActive('/portafolio')} transition-colors text-sm uppercase tracking-wider bg-transparent border-none cursor-pointer`}>
                             Portafolio
-                        </Link>
-                        <Link to="/empleo" className={`${isActive('/empleo')} transition-colors text-sm uppercase tracking-wider`}>
+                        </button>
+                        <button onClick={() => handleNavClick('/empleo')} className={`${isActive('/empleo')} transition-colors text-sm uppercase tracking-wider bg-transparent border-none cursor-pointer`}>
                             Empleo
-                        </Link>
+                        </button>
                     </nav>
 
                     {/* Desktop Actions */}
@@ -87,26 +106,26 @@ const Navbar = () => {
             {mobileMenuOpen && (
                 <div className="md:hidden absolute top-20 left-0 w-full bg-slate-900 border-b border-slate-800 shadow-xl animate-in slide-in-from-top-5">
                     <div className="px-4 py-6 space-y-4">
-                        <Link to="/" onClick={closeMobileMenu} className="flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors">
+                        <button onClick={() => handleNavClick('/')} className="w-full flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors text-left">
                             <Building2 size={20} />
                             <span>Inicio</span>
-                        </Link>
-                        <a href="#about" onClick={closeMobileMenu} className="flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors">
+                        </button>
+                        <button onClick={() => handleNavClick('#about', true)} className="w-full flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors text-left">
                             <Users size={20} />
                             <span>Nosotros</span>
-                        </a>
-                        <Link to="/servicios" onClick={closeMobileMenu} className="flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors">
+                        </button>
+                        <button onClick={() => handleNavClick('/servicios')} className="w-full flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors text-left">
                             <Briefcase size={20} />
                             <span>Servicios</span>
-                        </Link>
-                        <Link to="/portafolio" onClick={closeMobileMenu} className="flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors">
+                        </button>
+                        <button onClick={() => handleNavClick('/portafolio')} className="w-full flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors text-left">
                             <Image size={20} />
                             <span>Portafolio</span>
-                        </Link>
-                        <Link to="/empleo" onClick={closeMobileMenu} className="flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors">
+                        </button>
+                        <button onClick={() => handleNavClick('/empleo')} className="w-full flex items-center space-x-3 text-slate-300 hover:text-white hover:bg-slate-800 p-3 rounded-lg transition-colors text-left">
                             <Users size={20} />
                             <span>Empleo</span>
-                        </Link>
+                        </button>
 
                         <div className="h-px bg-slate-800 my-4"></div>
 
