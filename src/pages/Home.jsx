@@ -214,7 +214,7 @@ const styles = {
         letterSpacing: '2px'
     },
     statsBar: {
-        background: 'var(--accent-1)',
+        background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
         color: 'var(--white)',
         display: 'flex',
         flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
@@ -224,7 +224,8 @@ const styles = {
         position: 'relative',
         zIndex: 10,
         fontFamily: 'Oswald',
-        marginBottom: '0.5rem'
+        marginBottom: '0.5rem',
+        boxShadow: '0 10px 30px rgba(37, 99, 235, 0.2)'
     },
     statItem: {
         display: 'flex',
