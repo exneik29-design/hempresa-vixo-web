@@ -20,6 +20,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import CMSManager from './pages/admin/CMSManager';
 import QuotationsManager from './pages/admin/QuotationsManager';
 import SettingsManager from './pages/admin/SettingsManager';
+import ProjectsManager from './pages/admin/ProjectsManager';
 
 // Client Pages
 import ClientDashboard from './pages/client/ClientDashboard';
@@ -66,6 +67,7 @@ function App() {
                   </ProtectedRoute>
                 }>
                   <Route index element={<AdminDashboard />} />
+                  <Route path="proyectos" element={<ProjectsManager />} />
                   <Route path="cms" element={<CMSManager />} />
                   <Route path="cotizaciones" element={<QuotationsManager />} />
                   <Route path="configuracion" element={<SettingsManager />} />
