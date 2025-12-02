@@ -40,6 +40,10 @@ const Navbar = () => {
         }
     };
 
+    const isActive = (path) => {
+        return location.pathname === path ? 'text-blue-500 font-semibold' : 'text-slate-300 hover:text-white';
+    };
+
     return (
         <header className="fixed w-full top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
