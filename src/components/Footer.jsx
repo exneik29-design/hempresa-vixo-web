@@ -11,7 +11,7 @@ const Footer = () => {
                     <div style={styles.column}>
                         <div style={styles.brandSection}>
                             <div style={styles.logo}>
-                                <span style={styles.logoText}>V</span>
+                                <span style={styles.logoText}>D</span>
                             </div>
                             <span style={styles.companyName}>{COMPANY_INFO.name}</span>
                         </div>

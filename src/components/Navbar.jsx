@@ -38,7 +38,7 @@ const Navbar = () => {
         <header style={styles.header}>
             <Link to="/" style={styles.brand} onClick={closeMobileMenu}>
                 <div style={styles.logo}>
-                    <span style={styles.logoText}>V</span>
+                    <span style={styles.logoText}>D</span>
                 </div>
                 {COMPANY_INFO.name}
             </Link>
