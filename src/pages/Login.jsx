@@ -1,262 +1,208 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Footer from '../components/Footer';
+import { Lock, Mail, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { COMPANY_INFO } from '../config/company';
 
 const Login = () => {
-    const navigate = useNavigate();
-    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
+        setIsLoading(true);
 
+        // Simular pequeño delay para efecto de carga
         setTimeout(() => {
             const result = login(email, password);
 
             if (result.success) {
-                if (result.role === 'admin') {
-                    navigate('/admin');
-                } else if (result.role === 'client') {
-                    navigate('/client');
+                // Redirección basada en el rol
+                switch (result.role) {
+                    case 'admin':
+                        navigate('/admin');
+                        break;
+                    case 'manager':
+                        navigate('/manager');
+                        break;
+                    case 'client':
+                        navigate('/client/dashboard');
+                        break;
+                    case 'worker':
+                        navigate('/portal');
+                        break;
+                    default:
+                        navigate('/');
                 }
             } else {
-                setError(result.message || 'Credenciales inválidas.');
+                setError(result.message || 'Error al iniciar sesión');
+                setIsLoading(false);
             }
-
-            setLoading(false);
         }, 800);
     };
 
     return (
-        <div style={styles.container}>
-            <div style={styles.overlay}></div>
+        <div className="min-h-screen flex bg-slate-900">
+            {/* Lado Izquierdo - Imagen y Branding */}
+            <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+                <div className="absolute inset-0 bg-blue-900/40 mix-blend-multiply z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-transparent to-transparent z-20" />
+                <img
+                    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+                    alt="Corporate Building"
+                    className="w-full h-full object-cover"
+                />
 
-            <div style={styles.card}>
-                <div style={styles.header}>
-                    <h1 style={styles.brand}>
-                        <i className="fa-solid fa-bolt" style={{ color: '#00f0ff' }}></i>
-                        NEXUS <span style={{ color: '#ff4d00' }}>GROUP</span>
-                    </h1>
-                    <p style={styles.subtitle}>Acceso Corporativo Seguro</p>
+                <div className="absolute bottom-0 left-0 p-16 z-30 text-white w-full">
+                    <div className="flex items-center space-x-3 mb-6">
+                        <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30">
+                            <span className="font-bold text-2xl">V</span>
+                        </div>
+                        <span className="text-3xl font-bold tracking-tight">{COMPANY_INFO.name}</span>
+                    </div>
+                    <h2 className="text-4xl font-bold mb-4 leading-tight">
+                        Gestión Empresarial <br />
+                        <span className="text-blue-400">Inteligente y Segura</span>
+                    </h2>
+                    <p className="text-slate-300 text-lg max-w-md leading-relaxed">
+                        Accede a tu portal exclusivo para gestionar proyectos, finanzas y operaciones en tiempo real.
+                    </p>
                 </div>
+            </div>
 
-                <form onSubmit={handleLogin} style={styles.form}>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>ID Corporativo / Email</label>
-                        <div style={styles.inputWrapper}>
-                            <i className="fa-solid fa-user" style={styles.icon}></i>
-                            <input
-                                type="email"
-                                placeholder="usuario@empresa.com"
-                                style={styles.input}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
+            {/* Lado Derecho - Formulario */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
+                {/* Botón volver */}
+                <Link to="/" className="absolute top-8 right-8 text-slate-400 hover:text-white transition-colors flex items-center space-x-2 text-sm font-medium">
+                    <span>Volver al inicio</span>
+                    <ArrowRight size={16} />
+                </Link>
+
+                <div className="max-w-md w-full space-y-8">
+                    <div className="text-center lg:text-left">
+                        <div className="lg:hidden flex justify-center mb-6">
+                            <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30">
+                                <span className="text-white font-bold text-2xl">V</span>
+                            </div>
+                        </div>
+                        <h2 className="text-3xl font-bold text-white mb-2">Bienvenido de nuevo</h2>
+                        <p className="text-slate-400">Ingresa tus credenciales para acceder al sistema.</p>
+                    </div>
+
+                    {/* Credenciales de Demo (Solo visible en desarrollo/demo) */}
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-xs text-slate-400 space-y-1">
+                        <p className="font-semibold text-slate-300 mb-2 flex items-center">
+                            <CheckCircle2 size={14} className="mr-2 text-green-500" />
+                            Credenciales de Prueba (Demo):
+                        </p>
+                        <div className="grid grid-cols-2 gap-2">
+                            <div>
+                                <span className="text-blue-400">Admin:</span> admin@nexus.com
+                            </div>
+                            <div>
+                                <span className="text-slate-500">Pass:</span> admin
+                            </div>
+                            <div>
+                                <span className="text-blue-400">Cliente:</span> cliente@empresa.com
+                            </div>
+                            <div>
+                                <span className="text-slate-500">Pass:</span> cliente
+                            </div>
+                            <div>
+                                <span className="text-blue-400">Trabajador:</span> trabajador@vixo.com
+                            </div>
+                            <div>
+                                <span className="text-slate-500">Pass:</span> trabajador
+                            </div>
                         </div>
                     </div>
 
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Contraseña</label>
-                        <div style={styles.inputWrapper}>
-                            <i className="fa-solid fa-lock" style={styles.icon}></i>
-                            <input
-                                type="password"
-                                placeholder="••••••••"
-                                style={styles.input}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-6 mt-8">
+                        <div className="space-y-4">
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <Mail className="h-5 w-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                                </div>
+                                <input
+                                    type="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="block w-full pl-10 pr-3 py-3 border border-slate-700 rounded-lg leading-5 bg-slate-800/50 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 sm:text-sm"
+                                    placeholder="Correo electrónico"
+                                />
+                            </div>
 
-                    {error && (
-                        <div style={styles.error}>
-                            <i className="fa-solid fa-circle-exclamation"></i> {error}
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <Lock className="h-5 w-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                                </div>
+                                <input
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="block w-full pl-10 pr-3 py-3 border border-slate-700 rounded-lg leading-5 bg-slate-800/50 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 sm:text-sm"
+                                    placeholder="Contraseña"
+                                />
+                            </div>
                         </div>
-                    )}
 
-                    <button
-                        type="submit"
-                        style={{
-                            width: '100%',
-                            marginTop: '1rem',
-                            padding: '15px',
-                            background: loading ? '#ccc' : '#ff4d00',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            fontSize: '1rem',
-                            cursor: loading ? 'not-allowed' : 'pointer',
-                            fontWeight: '600'
-                        }}
-                        disabled={loading}
-                    >
-                        {loading ? (
-                            <>
-                                <i className="fa-solid fa-spinner fa-spin"></i> VERIFICANDO...
-                            </>
-                        ) : (
-                            'INGRESAR AL SISTEMA'
+                        {error && (
+                            <div className="flex items-center p-4 text-sm text-red-400 bg-red-900/20 border border-red-900/50 rounded-lg animate-in fade-in slide-in-from-top-2">
+                                <AlertCircle className="h-5 w-5 mr-3 flex-shrink-0" />
+                                <span>{error}</span>
+                            </div>
                         )}
-                    </button>
-                </form>
 
-                <div style={styles.footer}>
-                    <Link to="/" style={styles.link}>← Volver al sitio público</Link>
-                    <a href="#" style={styles.link}>Recuperar acceso</a>
-                </div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                                <input
+                                    id="remember-me"
+                                    name="remember-me"
+                                    type="checkbox"
+                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-700 rounded bg-slate-800"
+                                />
+                                <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-400">
+                                    Recordarme
+                                </label>
+                            </div>
 
-                <div style={{ marginTop: '20px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px' }}>
-                    <p style={{ color: '#cbd5e1', marginBottom: '10px', fontSize: '0.9rem' }}>¿Eres parte del equipo?</p>
-                    <Link to="/portal" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                        <i className="fa-solid fa-helmet-safety"></i> Ir al Portal del Trabajador
-                    </Link>
-                </div>
+                            <div className="text-sm">
+                                <a href="#" className="font-medium text-blue-500 hover:text-blue-400 transition-colors">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                            </div>
+                        </div>
 
-                <div style={styles.demoCredentials}>
-                    <p style={{ fontSize: '0.75rem', color: '#8892b0', marginBottom: '5px' }}>Credenciales de prueba:</p>
-                    <p style={{ fontSize: '0.75rem', color: '#64ffda' }}>Admin: admin@nexus.com / admin</p>
-                    <p style={{ fontSize: '0.75rem', color: '#64ffda' }}>Cliente: cliente@empresa.com / cliente</p>
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.02] ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                        >
+                            {isLoading ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                'Iniciar Sesión'
+                            )}
+                        </button>
+                    </form>
+
+                    <p className="mt-2 text-center text-sm text-slate-500">
+                        ¿No tienes acceso?{' '}
+                        <a href={`mailto:${COMPANY_INFO.emails.support}`} className="font-medium text-blue-500 hover:text-blue-400 transition-colors">
+                            Contactar a Soporte
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
     );
-};
-
-const styles = {
-    container: {
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        backgroundColor: '#0a192f',
-        overflow: 'hidden',
-        padding: '1rem'
-    },
-    overlay: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: 'linear-gradient(rgba(10,25,47,0.8), rgba(10,25,47,0.9)), url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 0
-    },
-    card: {
-        position: 'relative',
-        zIndex: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(20px)',
-        padding: 'clamp(2rem, 5vw, 3rem)',
-        borderRadius: '12px',
-        border: '1px solid rgba(255,255,255,0.1)',
-        width: '100%',
-        maxWidth: '450px',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
-    },
-    header: {
-        textAlign: 'center',
-        marginBottom: '2.5rem'
-    },
-    brand: {
-        fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-        fontWeight: '700',
-        color: '#ffffff',
-        marginBottom: '0.5rem',
-        fontFamily: 'Oswald, sans-serif',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '10px'
-    },
-    subtitle: {
-        color: '#8892b0',
-        fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
-        letterSpacing: '1px',
-        textTransform: 'uppercase'
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.5rem'
-    },
-    inputGroup: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem'
-    },
-    label: {
-        fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
-        fontWeight: '600',
-        color: '#ccd6f6',
-        textTransform: 'uppercase'
-    },
-    inputWrapper: {
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'center'
-    },
-    icon: {
-        position: 'absolute',
-        left: '15px',
-        color: '#8892b0',
-        zIndex: 2
-    },
-    input: {
-        width: '100%',
-        padding: '12px 12px 12px 40px',
-        backgroundColor: 'rgba(10, 25, 47, 0.5)',
-        border: '1px solid #233554',
-        borderRadius: '4px',
-        color: 'white',
-        fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-        outline: 'none',
-        transition: 'border-color 0.3s'
-    },
-    error: {
-        color: '#ff6b6b',
-        fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
-        textAlign: 'center',
-        backgroundColor: 'rgba(255, 107, 107, 0.1)',
-        padding: '0.8rem',
-        borderRadius: '4px',
-        border: '1px solid rgba(255, 107, 107, 0.2)'
-    },
-    footer: {
-        marginTop: '2rem',
-        display: 'flex',
-        flexDirection: window.innerWidth <= 480 ? 'column' : 'row',
-        justifyContent: 'space-between',
-        gap: '1rem',
-        fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
-        borderTop: '1px solid rgba(255,255,255,0.1)',
-        paddingTop: '1.5rem',
-        textAlign: 'center'
-    },
-    link: {
-        color: '#8892b0',
-        textDecoration: 'none',
-        transition: 'color 0.3s'
-    },
-    demoCredentials: {
-        marginTop: '2rem',
-        padding: '1rem',
-        backgroundColor: 'rgba(100, 255, 218, 0.05)',
-        borderRadius: '6px',
-        border: '1px solid rgba(100, 255, 218, 0.1)',
-        textAlign: 'center'
-    }
 };
 
 export default Login;
