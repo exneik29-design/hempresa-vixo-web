@@ -90,9 +90,9 @@ const Login = () => {
                             Credenciales de Prueba (Demo):
                         </p>
                         <div style={styles.demoGrid}>
-                            <div><span style={styles.demoLabel}>Admin:</span> admin@nexus.com</div>
+                            <div><span style={styles.demoLabel}>Admin:</span> admin@dacaro.cl</div>
                             <div><span style={styles.demoPass}>Pass:</span> admin</div>
-                            <div><span style={styles.demoLabel}>Cliente:</span> cliente@empresa.com</div>
+                            <div><span style={styles.demoLabel}>Cliente:</span> cliente@dacaro.cl</div>
                             <div><span style={styles.demoPass}>Pass:</span> cliente</div>
                         </div>
                     </div>

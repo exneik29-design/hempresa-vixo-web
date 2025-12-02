@@ -10,13 +10,13 @@ export const AuthProvider = ({ children }) => {
 
     const login = (email, password) => {
         // Simulación de autenticación
-        if (email === 'admin@nexus.com' && password === 'admin') {
+        if (email === 'admin@dacaro.cl' && password === 'admin') {
             const userData = { email, role: 'admin', name: 'Administrador' };
             setUser(userData);
             localStorage.setItem('nexus_user', JSON.stringify(userData));
             return { success: true, role: 'admin' };
-        } else if (email === 'cliente@empresa.com' && password === 'cliente') {
-            const userData = { email, role: 'client', name: 'Industrias S.A.' };
+        } else if (email === 'cliente@dacaro.cl' && password === 'cliente') {
+            const userData = { email, role: 'client', name: 'Cliente Demo' };
             setUser(userData);
             localStorage.setItem('nexus_user', JSON.stringify(userData));
             return { success: true, role: 'client' };
