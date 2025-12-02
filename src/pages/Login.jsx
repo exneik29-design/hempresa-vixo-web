@@ -24,14 +24,8 @@ const Login = () => {
                     case 'admin':
                         navigate('/admin');
                         break;
-                    case 'manager':
-                        navigate('/manager');
-                        break;
                     case 'client':
                         navigate('/client/dashboard');
-                        break;
-                    case 'worker':
-                        navigate('/portal');
                         break;
                     default:
                         navigate('/');
@@ -100,8 +94,6 @@ const Login = () => {
                             <div><span style={styles.demoPass}>Pass:</span> admin</div>
                             <div><span style={styles.demoLabel}>Cliente:</span> cliente@empresa.com</div>
                             <div><span style={styles.demoPass}>Pass:</span> cliente</div>
-                            <div><span style={styles.demoLabel}>Trabajador:</span> trabajador@dacaro.cl</div>
-                            <div><span style={styles.demoPass}>Pass:</span> trabajador</div>
                         </div>
                     </div>
 

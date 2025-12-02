@@ -13,23 +13,13 @@ import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
-import WorkerPortal from './pages/worker/WorkerPortal';
 
-// Admin Pages
+// Admin Pages (Gestión Web)
 import AdminLayout from './pages/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CMSManager from './pages/admin/CMSManager';
 import QuotationsManager from './pages/admin/QuotationsManager';
 import SettingsManager from './pages/admin/SettingsManager';
-
-// Manager Pages (ERP Software)
-import ManagerLayout from './pages/manager/ManagerLayout';
-import ManagerDashboard from './pages/manager/ManagerDashboard';
-import BudgetManager from './pages/manager/BudgetManager';
-import ProjectManager from './pages/manager/ProjectManager';
-import WorkerManager from './pages/manager/WorkerManager';
-import FinanceManager from './pages/manager/FinanceManager';
-import InventoryManager from './pages/manager/InventoryManager';
 
 // Client Pages
 import ClientDashboard from './pages/client/ClientDashboard';
@@ -58,25 +48,18 @@ function App() {
                 <Route path="/login" element={<Login />} />
 
                 {/* ==================================================================
-                    SISTEMA DE GESTIÓN (ERP) - ACCESO EXCLUSIVO
+                    PANEL WEB DE ADMINISTRACIÓN Y CLIENTES
                     Acceso: Requiere Login y Rol específico
                    ================================================================== */}
 
-                {/* 1. Portal de Trabajadores (Ahora Protegido) */}
-                <Route path="/portal" element={
-                  <ProtectedRoute requiredRole="worker">
-                    <WorkerPortal />
-                  </ProtectedRoute>
-                } />
-
-                {/* 2. Portal de Clientes */}
+                {/* 1. Portal de Clientes - Ver cronogramas y proyectos */}
                 <Route path="/client/dashboard" element={
                   <ProtectedRoute requiredRole="client">
                     <ClientDashboard />
                   </ProtectedRoute>
                 } />
 
-                {/* 3. Panel de Administración (CMS Web) */}
+                {/* 2. Panel de Administración Web - Gestión de cotizaciones y cronogramas */}
                 <Route path="/admin" element={
                   <ProtectedRoute requiredRole="admin">
                     <AdminLayout />
@@ -86,21 +69,6 @@ function App() {
                   <Route path="cms" element={<CMSManager />} />
                   <Route path="cotizaciones" element={<QuotationsManager />} />
                   <Route path="configuracion" element={<SettingsManager />} />
-                </Route>
-
-                {/* 4. Gerencia / ERP Completo (Software Interno) */}
-                <Route path="/manager" element={
-                  <ProtectedRoute requiredRole="admin"> {/* O rol 'manager' si existe */}
-                    <ManagerLayout />
-                  </ProtectedRoute>
-                }>
-                  <Route index element={<ManagerDashboard />} />
-                  <Route path="dashboard" element={<ManagerDashboard />} />
-                  <Route path="budget" element={<BudgetManager />} />
-                  <Route path="projects" element={<ProjectManager />} />
-                  <Route path="workers" element={<WorkerManager />} />
-                  <Route path="finance" element={<FinanceManager />} />
-                  <Route path="inventory" element={<InventoryManager />} />
                 </Route>
               </Routes>
             </Router>

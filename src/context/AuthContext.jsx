@@ -20,11 +20,6 @@ export const AuthProvider = ({ children }) => {
             setUser(userData);
             localStorage.setItem('nexus_user', JSON.stringify(userData));
             return { success: true, role: 'client' };
-        } else if (email === 'trabajador@vixo.com' && password === 'trabajador') {
-            const userData = { email, role: 'worker', name: 'Juan Pérez' };
-            setUser(userData);
-            localStorage.setItem('nexus_user', JSON.stringify(userData));
-            return { success: true, role: 'worker' };
         }
         return { success: false, message: 'Credenciales inválidas' };
     };
