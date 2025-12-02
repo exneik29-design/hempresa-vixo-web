@@ -16,16 +16,8 @@ const Footer = () => {
                             <span style={styles.companyName}>{COMPANY_INFO.name}</span>
                         </div>
                         <p style={styles.description}>
-                            Transformando la gestión empresarial con soluciones integrales en construcción y contabilidad.
+                            Empresa integral de construcción e ingeniería eléctrica. Especialistas en obras industriales, comerciales y residenciales con más de 15 años de experiencia.
                         </p>
-                        <div style={styles.socialLinks}>
-                            <a href={COMPANY_INFO.social.facebook} target="_blank" rel="noopener noreferrer" style={styles.socialIcon}>
-                                <i className="fa-brands fa-facebook"></i>
-                            </a>
-                            <a href={COMPANY_INFO.social.linkedin} target="_blank" rel="noopener noreferrer" style={styles.socialIcon}>
-                                <i className="fa-brands fa-linkedin"></i>
-                            </a>
-                        </div>
                     </div>
 
                     {/* Quick Links */}
@@ -44,10 +36,10 @@ const Footer = () => {
                     <div style={styles.column}>
                         <h4 style={styles.heading}>Servicios</h4>
                         <ul style={styles.linkList}>
-                            <li><Link to="/servicios" style={styles.link}>Gestión de Proyectos</Link></li>
-                            <li><Link to="/servicios" style={styles.link}>Consultoría Contable</Link></li>
-                            <li><Link to="/servicios" style={styles.link}>Recursos Humanos</Link></li>
-                            <li><Link to="/servicios" style={styles.link}>Auditoría Financiera</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Construcción Civil</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Ingeniería Eléctrica</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Gerencia de Proyectos</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Instalaciones Industriales</Link></li>
                         </ul>
                     </div>
 
