@@ -224,8 +224,18 @@ const styles = {
         position: 'relative',
         zIndex: 10,
         fontFamily: 'Oswald',
-        display: 'block',
         marginBottom: '0.5rem'
+    },
+    statItem: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '0.5rem',
+        padding: '1rem'
+    },
+    statNumber: {
+        fontSize: 'clamp(2rem, 4vw, 3rem)',
+        fontWeight: 'bold'
     },
     statLabel: {
         fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
