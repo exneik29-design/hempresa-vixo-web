@@ -58,8 +58,8 @@ const defaultContent = {
         {
             id: 1,
             icon: 'fa-bolt',
-            title: 'Instalaciones Eléctricas',
-            description: 'Proyectos de baja, media y alta tensión con certificación SEC',
+            title: 'Instalaciones Eléctricas Industriales',
+            description: 'Proyectos de baja, media y alta tensión con certificación SEC para obras industriales y comerciales',
             image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=400',
             features: [
                 'Instalaciones industriales certificadas',
@@ -71,27 +71,27 @@ const defaultContent = {
         {
             id: 2,
             icon: 'fa-building',
-            title: 'Ingeniería Civil',
-            description: 'Construcción de obras industriales y comerciales',
+            title: 'Construcción Civil e Industrial',
+            description: 'Construcción de obras industriales, comerciales y residenciales desde los cimientos',
             image: 'https://images.unsplash.com/photo-1541976590-713941681591?w=400',
             features: [
                 'Construcción de naves industriales',
-                'Edificios comerciales',
-                'Reforzamiento estructural',
-                'Gestión integral de proyectos'
+                'Edificios comerciales y galpones',
+                'Obras residenciales',
+                'Reforzamiento estructural'
             ]
         },
         {
             id: 3,
-            icon: 'fa-gear',
-            title: 'Automatización',
-            description: 'Sistemas de control y automatización industrial',
+            icon: 'fa-hammer',
+            title: 'Remodelaciones y Ampliaciones',
+            description: 'Renovación y ampliación de espacios industriales, comerciales y residenciales',
             image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400',
             features: [
-                'Control de procesos industriales',
-                'SCADA y PLC',
-                'Instrumentación',
-                'Sistemas de seguridad'
+                'Remodelación de oficinas y locales',
+                'Ampliación de plantas industriales',
+                'Modernización de instalaciones eléctricas',
+                'Adecuación y mejoras estructurales'
             ]
         }
     ],
