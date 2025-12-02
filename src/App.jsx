@@ -44,26 +44,56 @@ function App() {
           <CompanyProvider>
             <Router>
               <Routes>
-                {/* Rutas Públicas */}
+                {/* ==================================================================
+                    SITIO WEB PÚBLICO (Marketing, Información, Contacto)
+                    Acceso: Libre para todo el mundo
+                   ================================================================== */}
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/portal" element={<WorkerPortal />} />
                 <Route path="/servicios" element={<Services />} />
                 <Route path="/portafolio" element={<Portfolio />} />
                 <Route path="/empleo" element={<Careers />} />
                 <Route path="/contacto" element={<Contact />} />
 
+                {/* Login: Puerta de entrada al sistema */}
+                <Route path="/login" element={<Login />} />
 
-                {/* Rutas Admin (CMS Web) */}
-                <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminLayout /></ProtectedRoute>}>
+                {/* ==================================================================
+                    SISTEMA DE GESTIÓN (ERP) - ACCESO EXCLUSIVO
+                    Acceso: Requiere Login y Rol específico
+                   ================================================================== */}
+
+                {/* 1. Portal de Trabajadores (Ahora Protegido) */}
+                <Route path="/portal" element={
+                  <ProtectedRoute requiredRole="worker">
+                    <WorkerPortal />
+                  </ProtectedRoute>
+                } />
+
+                {/* 2. Portal de Clientes */}
+                <Route path="/client/dashboard" element={
+                  <ProtectedRoute requiredRole="client">
+                    <ClientDashboard />
+                  </ProtectedRoute>
+                } />
+
+                {/* 3. Panel de Administración (CMS Web) */}
+                <Route path="/admin" element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }>
                   <Route index element={<AdminDashboard />} />
                   <Route path="cms" element={<CMSManager />} />
                   <Route path="cotizaciones" element={<QuotationsManager />} />
                   <Route path="configuracion" element={<SettingsManager />} />
                 </Route>
 
-                {/* Rutas Manager (Software ERP Interno) */}
-                <Route path="/manager" element={<ProtectedRoute requiredRole="admin"><ManagerLayout /></ProtectedRoute>}>
+                {/* 4. Gerencia / ERP Completo (Software Interno) */}
+                <Route path="/manager" element={
+                  <ProtectedRoute requiredRole="admin"> {/* O rol 'manager' si existe */}
+                    <ManagerLayout />
+                  </ProtectedRoute>
+                }>
                   <Route index element={<ManagerDashboard />} />
                   <Route path="dashboard" element={<ManagerDashboard />} />
                   <Route path="budget" element={<BudgetManager />} />
@@ -72,9 +102,6 @@ function App() {
                   <Route path="finance" element={<FinanceManager />} />
                   <Route path="inventory" element={<InventoryManager />} />
                 </Route>
-
-                {/* Rutas Cliente */}
-                <Route path="/client/dashboard" element={<ProtectedRoute requiredRole="client"><ClientDashboard /></ProtectedRoute>} />
               </Routes>
             </Router>
           </CompanyProvider>
