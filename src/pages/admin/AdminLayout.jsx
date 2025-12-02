@@ -14,6 +14,7 @@ const AdminLayout = () => {
 
     const menuItems = [
         { icon: 'fa-gauge-high', label: 'Dashboard', path: '/admin' },
+        { icon: 'fa-diagram-project', label: 'Gestión de Proyectos', path: '/admin/proyectos' },
         { icon: 'fa-edit', label: 'Gestión de Contenido', path: '/admin/cms' },
         { icon: 'fa-file-invoice', label: 'Cotizaciones', path: '/admin/cotizaciones' },
         { icon: 'fa-cog', label: 'Configuración', path: '/admin/configuracion' },
