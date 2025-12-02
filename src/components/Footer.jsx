@@ -1,75 +1,74 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 import { COMPANY_INFO } from '../config/company';
 
 const Footer = () => {
     return (
-        <footer className="bg-slate-900 text-slate-300 pt-16 pb-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <footer style={styles.footer}>
+            <div style={styles.container}>
+                <div style={styles.grid}>
                     {/* Company Info */}
-                    <div>
-                        <div className="flex items-center space-x-2 mb-6">
-                            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">V</span>
+                    <div style={styles.column}>
+                        <div style={styles.brandSection}>
+                            <div style={styles.logo}>
+                                <span style={styles.logoText}>V</span>
                             </div>
-                            <span className="text-2xl font-bold text-white">{COMPANY_INFO.name}</span>
+                            <span style={styles.companyName}>{COMPANY_INFO.name}</span>
                         </div>
-                        <p className="text-slate-400 mb-6">
+                        <p style={styles.description}>
                             Transformando la gestión empresarial con soluciones integrales en construcción y contabilidad.
                         </p>
-                        <div className="flex space-x-4">
-                            <a href={COMPANY_INFO.social.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition-colors">
-                                <Facebook size={20} />
+                        <div style={styles.socialLinks}>
+                            <a href={COMPANY_INFO.social.facebook} target="_blank" rel="noopener noreferrer" style={styles.socialIcon}>
+                                <i className="fa-brands fa-facebook"></i>
                             </a>
-                            <a href={COMPANY_INFO.social.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 transition-colors">
-                                <Instagram size={20} />
+                            <a href={COMPANY_INFO.social.instagram} target="_blank" rel="noopener noreferrer" style={styles.socialIcon}>
+                                <i className="fa-brands fa-instagram"></i>
                             </a>
-                            <a href={COMPANY_INFO.social.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-700 transition-colors">
-                                <Linkedin size={20} />
+                            <a href={COMPANY_INFO.social.linkedin} target="_blank" rel="noopener noreferrer" style={styles.socialIcon}>
+                                <i className="fa-brands fa-linkedin"></i>
                             </a>
                         </div>
                     </div>
 
                     {/* Quick Links */}
-                    <div>
-                        <h3 className="text-white font-semibold text-lg mb-6">Enlaces Rápidos</h3>
-                        <ul className="space-y-4">
-                            <li><Link to="/" className="hover:text-blue-400 transition-colors">Inicio</Link></li>
-                            <li><Link to="/services" className="hover:text-blue-400 transition-colors">Servicios</Link></li>
-                            <li><Link to="/portfolio" className="hover:text-blue-400 transition-colors">Proyectos</Link></li>
-                            <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Carreras</Link></li>
-                            <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contacto</Link></li>
+                    <div style={styles.column}>
+                        <h4 style={styles.heading}>Enlaces Rápidos</h4>
+                        <ul style={styles.linkList}>
+                            <li><Link to="/" style={styles.link}>Inicio</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Servicios</Link></li>
+                            <li><Link to="/portafolio" style={styles.link}>Proyectos</Link></li>
+                            <li><Link to="/empleo" style={styles.link}>Carreras</Link></li>
+                            <li><Link to="/contacto" style={styles.link}>Contacto</Link></li>
                         </ul>
                     </div>
 
                     {/* Services */}
-                    <div>
-                        <h3 className="text-white font-semibold text-lg mb-6">Servicios</h3>
-                        <ul className="space-y-4">
-                            <li><Link to="/services" className="hover:text-blue-400 transition-colors">Gestión de Proyectos</Link></li>
-                            <li><Link to="/services" className="hover:text-blue-400 transition-colors">Consultoría Contable</Link></li>
-                            <li><Link to="/services" className="hover:text-blue-400 transition-colors">Recursos Humanos</Link></li>
-                            <li><Link to="/services" className="hover:text-blue-400 transition-colors">Auditoría Financiera</Link></li>
+                    <div style={styles.column}>
+                        <h4 style={styles.heading}>Servicios</h4>
+                        <ul style={styles.linkList}>
+                            <li><Link to="/servicios" style={styles.link}>Gestión de Proyectos</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Consultoría Contable</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Recursos Humanos</Link></li>
+                            <li><Link to="/servicios" style={styles.link}>Auditoría Financiera</Link></li>
                         </ul>
                     </div>
 
                     {/* Contact Info */}
-                    <div>
-                        <h3 className="text-white font-semibold text-lg mb-6">Contacto</h3>
-                        <ul className="space-y-4">
-                            <li className="flex items-start space-x-3">
-                                <MapPin className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
+                    <div style={styles.column}>
+                        <h4 style={styles.heading}>Contacto</h4>
+                        <ul style={styles.contactList}>
+                            <li style={styles.contactItem}>
+                                <i className="fa-solid fa-map-marker-alt" style={styles.contactIcon}></i>
                                 <span>{COMPANY_INFO.address.street}, {COMPANY_INFO.address.city}</span>
                             </li>
-                            <li className="flex items-center space-x-3">
-                                <Phone className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                            <li style={styles.contactItem}>
+                                <i className="fa-solid fa-phone" style={styles.contactIcon}></i>
                                 <span>{COMPANY_INFO.phones.main}</span>
                             </li>
-                            <li className="flex items-center space-x-3">
-                                <Mail className="w-5 h-5 text-blue-500 flex-shrink-0" />
-                                <a href={`mailto:${COMPANY_INFO.emails.general}`} className="hover:text-blue-400 transition-colors">
+                            <li style={styles.contactItem}>
+                                <i className="fa-solid fa-envelope" style={styles.contactIcon}></i>
+                                <a href={`mailto:${COMPANY_INFO.emails.general}`} style={styles.link}>
                                     {COMPANY_INFO.emails.general}
                                 </a>
                             </li>
@@ -77,18 +76,154 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                    <p className="text-slate-500 text-sm mb-4 md:mb-0">
-                        © {new Date().getFullYear()} {COMPANY_INFO.legalName} Todos los derechos reservados.
+                <div style={styles.bottom}>
+                    <p style={styles.copyright}>
+                        © {new Date().getFullYear()} {COMPANY_INFO.legalName}. Todos los derechos reservados.
                     </p>
-                    <div className="flex space-x-6 text-sm text-slate-500">
-                        <Link to="/privacy" className="hover:text-blue-400 transition-colors">Privacidad</Link>
-                        <Link to="/terms" className="hover:text-blue-400 transition-colors">Términos</Link>
+                    <div style={styles.legalLinks}>
+                        <Link to="/privacy" style={styles.legalLink}>Privacidad</Link>
+                        <Link to="/terms" style={styles.legalLink}>Términos</Link>
                     </div>
                 </div>
             </div>
         </footer>
     );
+};
+
+const styles = {
+    footer: {
+        background: '#0a192f',
+        color: '#8892b0',
+        padding: '4rem 5%',
+        fontSize: '0.9rem'
+    },
+    container: {
+        maxWidth: 'var(--max-width)',
+        margin: '0 auto'
+    },
+    grid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: '3rem',
+        marginBottom: '3rem'
+    },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+    },
+    brandSection: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        marginBottom: '1rem'
+    },
+    logo: {
+        width: '40px',
+        height: '40px',
+        background: '#2563eb',
+        borderRadius: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    logoText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '1.5rem'
+    },
+    companyName: {
+        fontSize: '1.5rem',
+        fontWeight: 'bold',
+        color: 'white',
+        fontFamily: 'Oswald, sans-serif'
+    },
+    description: {
+        color: '#8892b0',
+        lineHeight: '1.6',
+        marginBottom: '1rem'
+    },
+    socialLinks: {
+        display: 'flex',
+        gap: '1rem'
+    },
+    socialIcon: {
+        width: '40px',
+        height: '40px',
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,0.05)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#8892b0',
+        transition: 'all 0.3s',
+        textDecoration: 'none',
+        fontSize: '1.2rem'
+    },
+    heading: {
+        color: 'white',
+        marginBottom: '1.5rem',
+        fontSize: '1.1rem',
+        fontFamily: 'Oswald, sans-serif',
+        textTransform: 'uppercase',
+        letterSpacing: '1px'
+    },
+    linkList: {
+        listStyle: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        padding: 0,
+        margin: 0
+    },
+    link: {
+        color: '#8892b0',
+        textDecoration: 'none',
+        transition: 'color 0.3s'
+    },
+    contactList: {
+        listStyle: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        padding: 0,
+        margin: 0
+    },
+    contactItem: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '12px',
+        color: '#8892b0'
+    },
+    contactIcon: {
+        color: '#2563eb',
+        fontSize: '1.1rem',
+        marginTop: '2px'
+    },
+    bottom: {
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        paddingTop: '2rem',
+        display: 'flex',
+        flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '1rem'
+    },
+    copyright: {
+        fontSize: '0.85rem',
+        color: '#64748b',
+        margin: 0
+    },
+    legalLinks: {
+        display: 'flex',
+        gap: '2rem'
+    },
+    legalLink: {
+        fontSize: '0.85rem',
+        color: '#64748b',
+        textDecoration: 'none',
+        transition: 'color 0.3s'
+    }
 };
 
 export default Footer;
